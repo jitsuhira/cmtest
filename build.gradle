@@ -1,0 +1,33 @@
+defaultTasks 'clean', 'jar'
+
+allprojects {
+	apply plugin : 'base'
+	group = 'jp.classmethod.testing'
+	version = '0.1-SNAPSHOT'
+}
+
+subprojects {
+    apply plugin: 'java'
+    apply plugin: 'eclipse'
+	apply plugin: 'idea'
+	
+    version = '0.1-SNAPSHOT'
+	
+	ext.defaultEncoding = 'UTF-8'
+	sourceCompatibility = targetCompatibility = 1.7
+	[compileJava, compileTestJava].each {
+		it.options.encoding = ext.defaultEncoding
+	}
+
+    repositories {
+       mavenCentral()
+    }
+
+    dependencies {
+        compile 'junit:junit:4.11+'
+    }
+
+    jar {
+        manifest.attributes provider: 'classmethod inc.'
+    }
+}
