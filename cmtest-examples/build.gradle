@@ -1,0 +1,8 @@
+defaultTasks 'clean', 'jar'
+
+ext.artifactId = 'cmtest-examples'
+
+dependencies {
+	testCompile project(':cmtest-core')
+}
+
