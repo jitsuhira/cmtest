@@ -6,7 +6,6 @@ allprojects {
 	
 	group = 'jp.classmethod.testing'
 	version = '0.1-SNAPSHOT'
-	
 }
 
 subprojects {
@@ -14,8 +13,6 @@ subprojects {
 	apply plugin: 'eclipse'
 	apply plugin: 'idea'
 	apply plugin: 'maven'
-
-	version = '0.1-SNAPSHOT'
 
 	ext.defaultEncoding = 'UTF-8'
 	sourceCompatibility = targetCompatibility = 1.7
