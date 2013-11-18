@@ -69,4 +69,15 @@ public abstract class ObjectVerifier<T> {
      */
     public abstract void verifyNotNullObject(T actual, T expected) throws AssertionError;
 
+    /**
+     * {@link Object#equals(Object)}メソッドで比較検証を行うデフォルトの {@link ObjectVerifier}
+     * @param <T> 比較する型
+     */
+    public static class EqualsObjectVerifier<T> extends ObjectVerifier<T> {
+        @Override
+        public void verifyNotNullObject(T actual, T expected) throws AssertionError {
+            assertThat(actual, is(expected));
+        }
+    };
+
 }

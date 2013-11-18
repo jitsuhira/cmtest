@@ -38,6 +38,13 @@ public class ArrayVerifier<T> {
     private ObjectVerifier<T> verifier;
 
     /**
+     * equalsメソッドで比較検証するObjectVerifierで、インスタンスを生成する。
+     */
+    public ArrayVerifier() {
+        this(new ObjectVerifier.EqualsObjectVerifier<T>());
+    }
+
+    /**
      * インスタンスを生成する。
      * @param verifier 各要素を比較する{@link ObjectVerifier}
      */

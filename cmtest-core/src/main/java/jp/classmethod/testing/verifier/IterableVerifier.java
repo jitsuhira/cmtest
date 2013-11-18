@@ -39,19 +39,25 @@ public class IterableVerifier<T> {
     private ObjectVerifier<T> verifier;
 
     /**
-     * インスタンスを生成する。
-     * @param verifier
+     * equalsメソッドで比較検証するObjectVerifierで、インスタンスを生成する。
+     */
+    public IterableVerifier() {
+        this(new ObjectVerifier.EqualsObjectVerifier<T>());
+    }
+
+    /**
+     * ObjectVerifierを指定し、インスタンスを生成する。
+     * @param verifier カスタム検証ルールを実装した{@link ObjectVerifier}
      */
     public IterableVerifier(ObjectVerifier<T> verifier) {
-        if (verifier == null)
-            throw new IllegalArgumentException("verifier cant't be null.");
+        if (verifier == null) throw new IllegalArgumentException("verifier cant't be null.");
         this.verifier = verifier;
     }
 
     /**
      * 反復要素の比較検証を行う。
-     * @param actual
-     * @param expected
+     * @param actual 反復要素の実測値
+     * @param expected 反復要素の期待値
      */
     public void verify(Iterable<T> actual, Iterable<T> expected) {
         if (expected == null) {

@@ -28,6 +28,13 @@ public class MapVerifier<T> {
     private ObjectVerifier<T> verifier;
 
     /**
+     * equalsメソッドで比較検証するObjectVerifierで、インスタンスを生成する。
+     */
+    public MapVerifier() {
+        this(new ObjectVerifier.EqualsObjectVerifier<T>());
+    }
+
+    /**
      * インスタンスを生成する。
      * @param verifier 各要素を比較する{@link ObjectVerifier}
      */
