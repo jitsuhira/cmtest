@@ -14,7 +14,7 @@ Apache License Version 2.0です。
 
 | モジュール名 | 概要 |
 | ------ | ------ |
-| cmtest-core | JUnitを使ったテストを書くためのモジュールです。 |
+| [cmtest-core](/cm-test/) | JUnitを使ったテストを書くためのモジュールです。 |
 | cmtest-examples | テストコードのサンプルです。 |
 
 
