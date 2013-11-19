@@ -1,0 +1,88 @@
+defaultTasks 'clean', 'jar'
+
+
+allprojects {
+	apply plugin: 'base'
+	
+	group = 'jp.classmethod.testing'
+	version = '0.1'
+}
+
+subprojects {
+	apply plugin: 'java'
+	apply plugin: 'eclipse'
+	apply plugin: 'idea'
+	apply plugin: 'maven'
+
+	ext.defaultEncoding = 'UTF-8'
+	sourceCompatibility = targetCompatibility = 1.7
+	[compileJava, compileTestJava].each {
+		it.options.encoding = ext.defaultEncoding
+	}
+
+	repositories {
+		mavenCentral() 
+	}
+
+	jar {
+		manifest.attributes provider: 'Classmethod inc.'
+	}
+
+	task sourcesJar(type: Jar, dependsOn:classes) {
+		classifier = 'sources'
+		from sourceSets.main.allSource
+	}
+	
+	task javadocJar(type: Jar, dependsOn:javadoc) {
+		classifier = 'javadoc'
+		from javadoc.destinationDir
+	}
+	
+	artifacts {
+		archives sourcesJar
+		archives javadocJar
+	}
+	
+	configurations {
+		deployerJars
+	}
+
+	dependencies { 
+		compile 'junit:junit:4.11+'
+		deployerJars 'org.springframework.build:aws-maven:4.7.0.RELEASE'
+	}
+
+
+	uploadArchives {
+		repositories {
+			mavenDeployer {
+				assert project.hasProperty('awsAccessKey') && project.hasProperty('awsSecretKey'): "AWS credential is required"
+				def awsCredentials = [
+					userName: awsAccessKey,
+					passphrase: awsSecretKey
+				]
+				configuration = configurations.deployerJars
+				repository(url: "s3://public-maven.classmethod.info/release") { authentication(awsCredentials) }
+				snapshotRepository(url: "s3://public-maven.classmethod.info/snapshot") { authentication(awsCredentials) }
+			}
+		}
+	}
+	
+
+	[
+		install.repositories.mavenInstaller,
+		uploadArchives.repositories.mavenDeployer
+	]*.pom*.whenConfigured { pom ->
+		pom.project {
+			inceptionYear '2013'
+			packaging 'jar'
+			licenses {
+				license {
+					name 'The Apache Software License, Version 2.0'
+					url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+					distribution 'repo'
+				}
+			}
+		}
+	}
+}
