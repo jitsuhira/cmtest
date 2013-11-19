@@ -1,0 +1,7 @@
+defaultTasks 'clean', 'jar'
+
+ext.artifactId = 'cmtest-db'
+
+dependencies {
+}
+
