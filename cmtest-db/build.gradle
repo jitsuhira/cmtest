@@ -3,5 +3,7 @@ defaultTasks 'clean', 'jar'
 ext.artifactId = 'cmtest-db'
 
 dependencies {
+    compile "org.dbunit:dbunit:2.4.9+"
+    compile "org.yaml:snakeyaml:1.13+"
 }
 
