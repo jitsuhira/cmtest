@@ -17,6 +17,7 @@ package jp.classmethod.testing.database;
 
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -95,6 +96,11 @@ public class YamlDataSet implements IDataSet {
     }
 
     @Override
+    public boolean isCaseSensitiveTableNames() {
+        return false;
+    }
+
+    @Override
     public String toString() {
         StringBuilder str = new StringBuilder();
         for (YamlTable table : tables.values()) {
@@ -133,51 +139,14 @@ public class YamlDataSet implements IDataSet {
         }
     }
 
-    @Override
-    public boolean isCaseSensitiveTableNames() {
-        return false;
-    }
-
-    public static class YamlTable implements ITable {
+    static class YamlTable implements ITable {
 
         final List<Map<String, Object>> rows;
-        final ITableMetaData tableMetaData;
-        final Column[] columns;
+        final YamlTableMeta tableMetaData;
 
         public YamlTable(final String tableName, List<Map<String, Object>> rows) {
             this.rows = rows;
-            ArrayList<Column> cols = new ArrayList<>();
-            final ArrayList<String> columnNames = new ArrayList<>();
-            if (!rows.isEmpty()) {
-                for (Entry<String, Object> entry : rows.get(0).entrySet()) {
-                    columnNames.add(entry.getKey());
-                    cols.add(new Column(entry.getKey(), DataType.UNKNOWN));
-                }
-            }
-            columns = cols.toArray(new Column[cols.size()]);
-            tableMetaData = new ITableMetaData() {
-
-                @Override
-                public String getTableName() {
-                    return tableName;
-                }
-
-                @Override
-                public Column[] getColumns() throws DataSetException {
-                    return columns;
-                }
-
-                @Override
-                public Column[] getPrimaryKeys() throws DataSetException {
-                    return new Column[0];
-                }
-
-                @Override
-                public int getColumnIndex(String columnName) throws DataSetException {
-                    return columnNames.indexOf(columnName);
-                }
-
-            };
+            this.tableMetaData = new YamlTableMeta(tableName, rows);
         }
 
         @Override
@@ -199,16 +168,40 @@ public class YamlDataSet implements IDataSet {
         }
 
         @Override
+        public int hashCode() {
+            final int prime = 31;
+            int result = 1;
+            result = prime * result + ((rows == null) ? 0 : rows.hashCode());
+            result = prime * result + ((tableMetaData == null) ? 0 : tableMetaData.hashCode());
+            return result;
+        }
+
+        @Override
+        public boolean equals(Object obj) {
+            if (this == obj) return true;
+            if (obj == null) return false;
+            if (getClass() != obj.getClass()) return false;
+            YamlTable other = (YamlTable) obj;
+            if (rows == null) {
+                if (other.rows != null) return false;
+            } else if (!rows.equals(other.rows)) return false;
+            if (tableMetaData == null) {
+                if (other.tableMetaData != null) return false;
+            } else if (!tableMetaData.equals(other.tableMetaData)) return false;
+            return true;
+        }
+
+        @Override
         public String toString() {
             StringBuilder str = new StringBuilder();
             str.append(tableMetaData.getTableName()).append("\n");
             str.append("-------------------------------------------\n");
-            for (Column column : columns) {
+            for (Column column : tableMetaData.columns) {
                 str.append(column.getColumnName()).append("\t");
             }
             str.append("\n");
             for (Map<String, Object> row : rows) {
-                for (Column column : columns) {
+                for (Column column : tableMetaData.columns) {
                     str.append(row.get(column.getColumnName())).append("\t");
                 }
                 str.append("\n");
@@ -216,6 +209,81 @@ public class YamlDataSet implements IDataSet {
             str.append("-------------------------------------------\n");
             return str.toString();
         }
+
+    }
+
+    static class YamlTableMeta implements ITableMetaData {
+
+        final String tableName;
+        final Column[] columns;
+        final List<String> columnNames;
+
+        YamlTableMeta(String tableName, List<Map<String, Object>> rows) {
+            this.tableName = tableName;
+            ArrayList<Column> cols = new ArrayList<>();
+            columnNames = new ArrayList<>();
+            if (!rows.isEmpty()) {
+                for (Entry<String, Object> entry : rows.get(0).entrySet()) {
+                    columnNames.add(entry.getKey());
+                    cols.add(new Column(entry.getKey(), DataType.UNKNOWN));
+                }
+            }
+            columns = cols.toArray(new Column[cols.size()]);
+        }
+
+        @Override
+        public String getTableName() {
+            return tableName;
+        }
+
+        @Override
+        public Column[] getColumns() throws DataSetException {
+            return columns;
+        }
+
+        @Override
+        public Column[] getPrimaryKeys() throws DataSetException {
+            return new Column[0];
+        }
+
+        @Override
+        public int getColumnIndex(String columnName) throws DataSetException {
+            return columnNames.indexOf(columnName);
+        }
+
+        @Override
+        public int hashCode() {
+            final int prime = 31;
+            int result = 1;
+            result = prime * result + Arrays.hashCode(columns);
+            result = prime * result + ((tableName == null) ? 0 : tableName.hashCode());
+            return result;
+        }
+
+        @Override
+        public boolean equals(Object obj) {
+            if (this == obj) return true;
+            if (obj == null) return false;
+            if (getClass() != obj.getClass()) return false;
+            YamlTableMeta other = (YamlTableMeta) obj;
+            if (!Arrays.equals(columns, other.columns)) return false;
+            if (tableName == null) {
+                if (other.tableName != null) return false;
+            } else if (!tableName.equals(other.tableName)) return false;
+            return true;
+        }
+
+        @Override
+        public String toString() {
+            StringBuilder str = new StringBuilder();
+            str.append("YamlTableMeta[").append(tableName);
+            for (Column column : this.columns) {
+                str.append(column).append(",");
+            }
+            str.append("]");
+            return str.toString();
+        }
+
     }
 
     @SuppressWarnings("unchecked")
