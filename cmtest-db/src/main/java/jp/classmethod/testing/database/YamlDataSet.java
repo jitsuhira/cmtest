@@ -99,6 +99,32 @@ public class YamlDataSet implements IDataSet {
     public boolean isCaseSensitiveTableNames() {
         return false;
     }
+    
+    
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((tableNames == null) ? 0 : tableNames.hashCode());
+        result = prime * result + ((tables == null) ? 0 : tables.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null) return false;
+        if (getClass() != obj.getClass()) return false;
+        YamlDataSet other = (YamlDataSet) obj;
+        if (tableNames == null) {
+            if (other.tableNames != null) return false;
+        } else if (!tableNames.equals(other.tableNames)) return false;
+        if (tables == null) {
+            if (other.tables != null) return false;
+        } else if (!tables.equals(other.tables)) return false;
+        return true;
+    }
 
     @Override
     public String toString() {
