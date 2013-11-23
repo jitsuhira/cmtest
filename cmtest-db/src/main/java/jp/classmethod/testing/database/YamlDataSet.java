@@ -35,6 +35,7 @@ import org.dbunit.dataset.ITableMetaData;
 import org.dbunit.dataset.RowOutOfBoundsException;
 import org.dbunit.dataset.datatype.DataType;
 import org.yaml.snakeyaml.Yaml;
+import org.yaml.snakeyaml.error.YAMLException;
 
 /**
  * 
@@ -313,7 +314,7 @@ public class YamlDataSet implements IDataSet {
     }
 
     @SuppressWarnings("unchecked")
-    public static YamlDataSet load(InputStream input) {
+    public static YamlDataSet load(InputStream input) throws YAMLException {
         return new YamlDataSet((Map<String, List<Map<String, Object>>>) new Yaml().load(input));
     }
 
