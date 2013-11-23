@@ -1,0 +1,11 @@
+defaultTasks 'clean', 'jar'
+
+ext.artifactId = 'cmtest-db'
+
+dependencies {
+    compile project(':cmtest-core')
+    compile "org.dbunit:dbunit:2.4.9+"
+    compile "org.yaml:snakeyaml:1.13+"
+    compile "org.slf4j:slf4j-api:1.7.5"
+}
+

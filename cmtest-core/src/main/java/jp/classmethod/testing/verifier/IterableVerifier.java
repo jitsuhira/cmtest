@@ -59,7 +59,7 @@ public class IterableVerifier<T> {
      * @param actual 反復要素の実測値
      * @param expected 反復要素の期待値
      */
-    public void verify(Iterable<T> actual, Iterable<T> expected) {
+    public void verify(Iterable<T> actual, Iterable<T> expected) throws Exception {
         if (expected == null) {
             assertThat(actual, is(nullValue()));
             return;

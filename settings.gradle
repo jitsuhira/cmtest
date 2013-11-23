@@ -1,1 +1,1 @@
-include "cmtest-core", "cmtest-examples"
+include "cmtest-core", "cmtest-db", "cmtest-examples"

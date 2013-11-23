@@ -43,7 +43,7 @@ public abstract class ObjectVerifier<T> {
      * @throws AssertionError テストの期待値がnullでなく、テストの実測値がnullである場合
      * @throws AssertionError verifyNotNullObjectの検証結果が、正しくない場合
      */
-    public void verifyObject(T actual, T expected) {
+    public void verifyObject(T actual, T expected) throws Exception {
         if (expected == null) {
             assertThat(actual, is(nullValue()));
         } else if (actual == null) {
@@ -67,7 +67,7 @@ public abstract class ObjectVerifier<T> {
      * @param expected テストの期待値 (NOT null)
      * @throws AssertionError 検証結果が正しくない場合
      */
-    public abstract void verifyNotNullObject(T actual, T expected) throws AssertionError;
+    public abstract void verifyNotNullObject(T actual, T expected) throws AssertionError, Exception;
 
     /**
      * {@link Object#equals(Object)}メソッドで比較検証を行うデフォルトの {@link ObjectVerifier}

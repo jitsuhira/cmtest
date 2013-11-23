@@ -38,7 +38,7 @@ public class ItemVerifier extends ObjectVerifier<Item> {
 	 * @param actual
 	 * @param expected
 	 */
-	public static void verify(Item actual, Item expected) {
+	public static void verify(Item actual, Item expected) throws Exception {
 		new ItemVerifier().verifyObject(actual, expected);
 	}
 
@@ -47,7 +47,7 @@ public class ItemVerifier extends ObjectVerifier<Item> {
 	 * @param actual
 	 * @param expected
 	 */
-	public static void verify(Iterable<Item> actual, Iterable<Item> expected) {
+	public static void verify(Iterable<Item> actual, Iterable<Item> expected) throws Exception {
 		new IterableVerifier<Item>(new ItemVerifier()).verify(actual, expected);
 	}
 
@@ -56,7 +56,7 @@ public class ItemVerifier extends ObjectVerifier<Item> {
      * @param actual
      * @param expected
      */
-    public static void verify(Item[] actual, Item[] expected) {
+    public static void verify(Item[] actual, Item[] expected) throws Exception {
         new ArrayVerifier<Item>(new ItemVerifier()).verify(actual, expected);
     }
 
@@ -65,7 +65,7 @@ public class ItemVerifier extends ObjectVerifier<Item> {
      * @param actual
      * @param expected
      */
-    public static void verify(Map<?, Item> actual, Map<?, Item> expected) {
+    public static void verify(Map<?, Item> actual, Map<?, Item> expected) throws Exception {
         new MapVerifier<Item>(new ItemVerifier()).verify(actual, expected);
     }
     
