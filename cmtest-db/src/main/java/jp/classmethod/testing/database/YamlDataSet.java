@@ -38,7 +38,9 @@ import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.error.YAMLException;
 
 /**
+ * YAML形式のリソースに対応するデータセット。
  * 
+ * データベーステストのフィクスチャとして利用する。
  * @author shuji
  * @since 1.0
  */
@@ -100,8 +102,6 @@ public class YamlDataSet implements IDataSet {
     public boolean isCaseSensitiveTableNames() {
         return false;
     }
-    
-    
 
     @Override
     public int hashCode() {
@@ -313,6 +313,13 @@ public class YamlDataSet implements IDataSet {
 
     }
 
+    /**
+     * YAMLリソースを指定して、データセットを読み込む
+     * @param input YAMLリソース
+     * @return YamlDataSet
+     * @throws YAMLException リソースの読み込みに失敗した場合
+     * @since 1.0
+     */
     @SuppressWarnings("unchecked")
     public static YamlDataSet load(InputStream input) throws YAMLException {
         return new YamlDataSet((Map<String, List<Map<String, Object>>>) new Yaml().load(input));
