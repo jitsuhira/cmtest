@@ -52,15 +52,19 @@ public class JdbcDatabaseConnectionManager implements DatabaseConnectionManager 
      * 
      * @param driverClass JDBCドライバ名
      * @param connectionUrl コネクションURL
-     * @throws ClassNotFoundException JDBCドライバはクラスパスに含まれていない場合
+     * @throws IllegalArgumentException JDBCドライバはクラスパスに含まれていない場合
      * @since 1.0
      */
-    protected JdbcDatabaseConnectionManager(String driverClass, String connectionUrl) throws ClassNotFoundException {
+    protected JdbcDatabaseConnectionManager(String driverClass, String connectionUrl) throws IllegalArgumentException {
         PreConditions.checkNotEmpty(driverClass, "driverClass");
         PreConditions.checkNotEmpty(connectionUrl, "connectionUrl");
         this.driverClass = driverClass;
         this.connectionUrl = connectionUrl;
-        Class.forName(driverClass);
+        try {
+            Class.forName(driverClass);
+        } catch (ClassNotFoundException e) {
+            throw new IllegalArgumentException("Driver class not found.", e);
+        }
     }
 
     @Override
@@ -86,11 +90,7 @@ public class JdbcDatabaseConnectionManager implements DatabaseConnectionManager 
         JdbcDatabaseConnectionManager cm;
 
         Builder(String driverClass, String connectionUrl) {
-            try {
-                cm = new JdbcDatabaseConnectionManager(driverClass, connectionUrl);
-            } catch (ClassNotFoundException e) {
-                throw new IllegalArgumentException("Driver class not found.", e);
-            }
+            cm = new JdbcDatabaseConnectionManager(driverClass, connectionUrl);
         }
 
         /**
