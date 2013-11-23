@@ -7,11 +7,11 @@ import jp.classmethod.testing.verifier.ObjectVerifier;
 
 public class UserVerifier extends ObjectVerifier<User> {
 
-    public static void verify(User actual, User expected) {
+    public static void verify(User actual, User expected) throws Exception {
         new UserVerifier().verifyObject(actual, expected);
     }
 
-    public static void verify(Iterable<User> actual, Iterable<User> expected) {
+    public static void verify(Iterable<User> actual, Iterable<User> expected) throws Exception {
         new IterableVerifier<User>(new UserVerifier()).verify(actual, expected);
     }
 

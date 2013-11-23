@@ -58,7 +58,7 @@ public class ArrayVerifier<T> {
      * @param actual 配列の実測値
      * @param expected 配列の期待値
      */
-    public void verify(T[] actual, T[] expected) {
+    public void verify(T[] actual, T[] expected) throws Exception {
         if (expected == null) {
             assertThat(actual, is(nullValue()));
             return;

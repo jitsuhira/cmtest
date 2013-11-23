@@ -48,7 +48,7 @@ public class MapVerifier<T> {
      * @param actual Mapの実測値
      * @param expected Mapの期待値
      */
-    public void verify(Map<?, T> actual, Map<?, T> expected) {
+    public void verify(Map<?, T> actual, Map<?, T> expected) throws Exception {
         if (expected == null) {
             assertThat(actual, is(nullValue()));
             return;
