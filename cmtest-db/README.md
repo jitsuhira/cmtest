@@ -4,9 +4,9 @@
 
 - [YamlDataSet](#YamlDataSet)
 - [DbUnitTester](#DbUnitTester)
--- [DbUnitTesterの宣言](#DbUnitTesterの宣言)
--- [フィクスチャの設定](#フィクスチャの設定)
--- [DbUnitTesterを用いた検証](#DbUnitTesterを用いた検証)
+	- [DbUnitTesterの宣言](#DbUnitTesterの宣言)
+	- [フィクスチャの設定](#フィクスチャの設定)
+	- [DbUnitTesterを用いた検証](#DbUnitTesterを用いた検証)
 
 ## 依存ライブラリ
 - [JUnit](http://junit.org/) 4.11+

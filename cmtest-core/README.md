@@ -1,12 +1,18 @@
 # cmtest-core
 このモジュールは、JUnitのテストコードを書く時に便利なヘルパーライブラリです。
 
+- [ObjectVerifier](#ObjectVerifier)
+	- [Listなどの反復要素で使う](#Listなどの反復要素で使う)
+	- [Mapで使う](#Mapで使う)
+	- [配列で使う](#配列で使う)
+	- [ObjectVerifier](#ObjectVerifier)
+
 ## 依存ライブラリ
-- JUnit 4.11+
+- [JUnit](http://junit.org/) 4.11+
 
 ## Examples
 
-### オブジェクトのカスタムアサーションを行う ObjectVerifier
+### ObjectVerifier
 #### 動機
 - 検証するクラスのequalsメソッドがオーバーライドできない
 - 検証するクラスで一部のフィールドを使ってアサーションを行いたい
