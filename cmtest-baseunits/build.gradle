@@ -1,0 +1,9 @@
+defaultTasks 'clean', 'jar'
+
+ext.artifactId = 'cmtest-baseunits'
+
+dependencies {
+    compile project(':cmtest-core')
+    compile "jp.xet:baseunits:$baseunitsVersion"
+}
+
