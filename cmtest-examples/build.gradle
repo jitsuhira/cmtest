@@ -4,5 +4,9 @@ ext.artifactId = 'cmtest-examples'
 
 dependencies {
 	testCompile project(':cmtest-core')
+    testCompile project(':cmtest-db')
+
+    compile 'com.h2database:h2:1.3.174+'
+    compile 'mysql:mysql-connector-java:5.1.27+'
 }
 
