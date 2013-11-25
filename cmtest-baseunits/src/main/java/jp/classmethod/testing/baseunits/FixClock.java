@@ -33,56 +33,56 @@ import org.junit.runners.model.Statement;
  */
 public class FixClock implements TestRule {
 
-	private TimeSource timeSource;
+    private TimeSource timeSource;
 
-	FixClock(TimeSource timeSource) {
-		this.timeSource = timeSource;
-	}
+    FixClock(TimeSource timeSource) {
+        this.timeSource = timeSource;
+    }
 
-	@Override
-	public Statement apply(final Statement base, Description description) {
-		return new Statement() {
+    @Override
+    public Statement apply(final Statement base, Description description) {
+        return new Statement() {
 
-			@Override
-			public void evaluate() throws Throwable {
-				TimeSource defaultTimeSource = Clock.timeSource();
-				Clock.setTimeSource(timeSource);
-				try {
-					base.evaluate();
-				} finally {
-					Clock.setTimeSource(defaultTimeSource);
-				}
-			}
-		};
-	}
+            @Override
+            public void evaluate() throws Throwable {
+                TimeSource defaultTimeSource = Clock.timeSource();
+                Clock.setTimeSource(timeSource);
+                try {
+                    base.evaluate();
+                } finally {
+                    Clock.setTimeSource(defaultTimeSource);
+                }
+            }
+        };
+    }
 
-	/**
-	 * 固定化した{@link TimePoint}を取得する
-	 * 
-	 * @return 固定した時刻
-	 * @since 1.0
-	 */
-	public TimePoint now() {
-		return timeSource.now();
-	}
+    /**
+     * 固定化した{@link TimePoint}を取得する
+     * 
+     * @return 固定した時刻
+     * @since 1.0
+     */
+    public TimePoint now() {
+        return timeSource.now();
+    }
 
-	/**
-	 * 現在時刻で{@link Clock}を固定するルールを作成する.
-	 * 
-	 * @return 現在時刻で{@link Clock}を固定するルール
-	 * @since 1.0
-	 */
-	public static FixClock atNow() {
-		return at(SystemClock.timeSource().now());
-	}
+    /**
+     * 現在時刻で{@link Clock}を固定するルールを作成する.
+     * 
+     * @return 現在時刻で{@link Clock}を固定するルール
+     * @since 1.0
+     */
+    public static FixClock atNow() {
+        return at(SystemClock.timeSource().now());
+    }
 
-	/**
-	 * 指定した{@link TimePoint}で{@link Clock}を固定するルールを作成する.
-	 * 
-	 * @return 指定した{@link TimePoint}で{@link Clock}を固定するルール
-	 * @since 1.0
-	 */
-	public static FixClock at(TimePoint fixedTime) {
-		return new FixClock(new FixedTimeSource(fixedTime));
-	}
+    /**
+     * 指定した{@link TimePoint}で{@link Clock}を固定するルールを作成する.
+     * 
+     * @return 指定した{@link TimePoint}で{@link Clock}を固定するルール
+     * @since 1.0
+     */
+    public static FixClock at(TimePoint fixedTime) {
+        return new FixClock(new FixedTimeSource(fixedTime));
+    }
 }
