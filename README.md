@@ -4,7 +4,7 @@
 JavaでJUnitなどを利用してテストコードを書く時に便利なヘルパーライブラリです。
 
 ## バージョン
-現在のバージョンは0.3-SNAPSHOTです。
+現在のバージョンは0.3です。
 詳細は[バージョン情報](./VERSION)を参照してください。
 
 ## ライセンス
@@ -44,13 +44,13 @@ Mavenを使っているならば、pom.xmlに追加してください。
 	  	<dependency>
 	  	    <groupId>jp.classmethod.testing</groupId>
 	  	    <artifactId>cmtest-core</artifactId>
-	  	    <version>0.3-SNAPSHOT</version>
+	  	    <version>0.3</version>
 	  	    <scope>test</scope>
 	  	</dependency>
 	  	<dependency>
 	  	    <groupId>jp.classmethod.testing</groupId>
 	  	    <artifactId>cmtest-db</artifactId>
-	  	    <version>0.3-SNAPSHOT</version>
+	  	    <version>0.3</version>
 	  	    <scope>test</scope>
 	  	</dependency>
 	  </dependencies>
@@ -65,8 +65,8 @@ Gradleを利用しているならば、build.gradleに追加します。
 		maven { url 'http://public-maven.classmethod.info/snapshot' }
 	}
 	dependencies {
-		testCompile 'jp.classmethod.testing:cmtest-core:0.3-SNAPSHOT'
-		testCompile 'jp.classmethod.testing:cmtest-db:0.3-SNAPSHOT'
+		testCompile 'jp.classmethod.testing:cmtest-core:0.3'
+		testCompile 'jp.classmethod.testing:cmtest-db:0.3'
 	}
 ```
 

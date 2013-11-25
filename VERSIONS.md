@@ -1,4 +1,8 @@
 # バージョン情報
+## 0.3 - 2013/11/25
+- [cmtest-baseunits](./cmtest-baseunits/)を追加
+	- FixClock - Clockによる現在時刻を固定化するルール
+
 ## 0.2 - 2013/11/23
 - [cmtest-db](./cmtest-db/) を追加
 	- YamlDataSet - YAMLによるDbUnitのデータセット
