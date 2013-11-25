@@ -5,7 +5,18 @@ allprojects {
 	apply plugin: 'base'
 	
 	group = 'jp.classmethod.testing'
-	version = '0.2'
+	version = '0.3'
+
+	repositories {
+		mavenCentral()
+		maven { url "http://maven.xet.jp/release" }
+	}
+
+	ext {
+		junitVersion = "4.11"
+		// cmtest-baseunits
+		baseunitsVersion = "2.11"
+	}
 }
 
 subprojects {
@@ -18,10 +29,6 @@ subprojects {
 	sourceCompatibility = targetCompatibility = 1.7
 	[compileJava, compileTestJava].each {
 		it.options.encoding = ext.defaultEncoding
-	}
-
-	repositories {
-		mavenCentral() 
 	}
 
 	jar {
@@ -46,9 +53,9 @@ subprojects {
 	configurations {
 		deployerJars
 	}
-
+	
 	dependencies { 
-		compile 'junit:junit:4.11+'
+		compile "junit:junit:$junitVersion"
 		deployerJars 'org.springframework.build:aws-maven:4.7.0.RELEASE'
 	}
 
@@ -86,3 +93,5 @@ subprojects {
 		}
 	}
 }
+
+
