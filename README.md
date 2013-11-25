@@ -16,6 +16,7 @@ Apache License Version 2.0です。
 | ------ | ------ |
 | [cmtest-core](./cmtest-core/) | JUnitを使ったテストを書くためのモジュールです。 |
 | [cmtest-db](./cmtest-db/) | DbUnitを使ったデータベーステストを書くためのモジュールです。 |
+| [cmtest-baseunits](./cmtest-baseunits/) | [BaseUnits Library](https://github.com/dai0304/baseunits/)を使ったテストを書くためのモジュールです。 |
 | cmtest-examples | テストコードのサンプルです。 |
 
 
@@ -79,6 +80,10 @@ Java 1.7以上が必要です。
 - [JUnit](http://junit.org/) 4.11+
 - [DbUnit](http://dbunit.sourceforge.net/) 2.4.9
 - [SnakeYAML](https://code.google.com/p/snakeyaml/) 1.13
+
+### cmtest-baseunits
+- [JUnit](http://junit.org/) 4.11+
+- [BaseUnits Library](https://github.com/dai0304/baseunits/) 2.11+
 
 ## 使い方
 各モジュールのREADME.mdを参照してください。
