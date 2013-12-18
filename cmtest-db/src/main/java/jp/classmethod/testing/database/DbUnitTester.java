@@ -15,9 +15,13 @@
  */
 package jp.classmethod.testing.database;
 
-import static jp.classmethod.testing.internal.PreConditions.*;
+import static jp.classmethod.testing.internal.PreConditions.checkNotEmpty;
+import static jp.classmethod.testing.internal.PreConditions.checkNotNull;
 
+import java.io.File;
 import java.io.InputStream;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.Arrays;
 import java.util.Queue;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -33,6 +37,7 @@ import org.dbunit.dataset.DataSetException;
 import org.dbunit.dataset.DefaultDataSet;
 import org.dbunit.dataset.IDataSet;
 import org.dbunit.dataset.ITable;
+import org.dbunit.dataset.csv.CsvDataSet;
 import org.dbunit.operation.DatabaseOperation;
 import org.junit.rules.TestRule;
 import org.junit.runner.Description;
@@ -160,24 +165,39 @@ public class DbUnitTester extends AbstractDatabaseTester implements TestRule {
         Class<?> testClass = description.getTestClass();
         Fixture fixture = findFixtureAnnotation(description);
         if (fixture == null) return;
+        Fixture.Type type = fixture.type();
         String[] resources = fixture.resources();
         if (resources == null || resources.length == 0) return;
         try {
             if (resources.length == 1) {
-                // TODO Yaml以外のFixtureに対応
-                setDataSet(YamlDataSet.load(getResourceAsStream(testClass, resources[0])));
+                setDataSet(loadDataSet(type, resources[0], testClass));
             } else {
                 IDataSet[] dataSets = new IDataSet[resources.length];
                 for (int i = 0; i < resources.length; i++) {
-                    // TODO Yaml以外のFixtureに対応
-                    dataSets[i] = YamlDataSet.load(getResourceAsStream(testClass, resources[i]));
+                    dataSets[i] = loadDataSet(type, resources[i], testClass);
                 }
                 setDataSet(new CompositeDataSet(dataSets));
             }
         } catch (YAMLException e) {
             throw new YAMLException("Cant load fixture: " + Arrays.toString(resources), e);
-        } catch (DataSetException e) {
+        } catch (DataSetException | URISyntaxException e) {
             throw new AssertionError(e);
+        }
+    }
+    
+    private IDataSet loadDataSet(Fixture.Type type, String resource, Class<?> testClass) 
+            throws DataSetException, URISyntaxException {
+        switch (type) {
+        case CSV:
+            URL url = testClass.getResource(resource);
+            if (url == null) throw new AssertionError("Can't find resource: " + resource);
+            return new CsvDataSet(new File(url.toURI()));
+        case YAML:
+            InputStream input = getResourceAsStream(testClass, resource);
+            if (input == null) throw new AssertionError("Can't find resource: " + resource);
+            return YamlDataSet.load(input);
+        default:
+            throw new IllegalArgumentException("Unsupported type: " + type);
         }
     }
 
