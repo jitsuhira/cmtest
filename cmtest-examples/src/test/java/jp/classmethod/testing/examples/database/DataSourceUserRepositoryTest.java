@@ -8,6 +8,7 @@ import java.util.List;
 
 import jp.classmethod.testing.database.DbUnitTester;
 import jp.classmethod.testing.database.Fixture;
+import jp.classmethod.testing.database.Fixture.Type;
 import jp.classmethod.testing.database.YamlDataSet;
 
 import org.dbunit.dataset.IDataSet;
@@ -68,6 +69,25 @@ public class DataSourceUserRepositoryTest {
 
     }
 
+    @Fixture(resources = "usertest_fixtures", type= Type.CSV)
+    public static class CSV形式のリソースで2件の場合 {
+        @Rule
+        public DbUnitTester tester = createDbUnitTester();
+
+        @Test
+        public void findAllは2件のレコードを返す() throws Exception {
+            // Setup
+            DataSourceUserRepository sut = new DataSourceUserRepository();
+            List<User> expected = Arrays.asList(Fixtures.Users.user01(), Fixtures.Users.user02());
+            // Exercise
+            List<User> actual = sut.findAll();
+            // Verify
+            verify(actual, expected);
+        }
+
+    }
+
+    
     static DbUnitTester createDbUnitTester() {
         return DbUnitTester.forDataSource(DataSourceManager.getInstance().getDataSource()).create();
     }
