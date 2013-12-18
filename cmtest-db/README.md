@@ -168,8 +168,41 @@ public class UserRepositoryTest {
 }
 ```
 
-##### YAML以外のフィクスチャ
-TODO
+##### CSVフィクスチャ
+フィクスチャにはCSV形式を指定する事ができます。
+CSV形式のフィクスチャはDbUnitのCSVDataSetを利用します。
+
+CSV形式を利用する場合は、FixtureアノテーションのtypeにFixture.Type.CSVを、resourceにはCSVファイルを置いたフォルダを指定しています。
+```java
+@Fixture(type = Fixture.Type.CSV, resources = "fixtures")
+@Test
+public void findAllは2件のレコードを返す() throws Exception {
+}
+```
+CSVフォルダには、テーブル毎に定義したCSVファイルとCSVファイル名を定義したtable-ordering.txtファイルを置きます。
+例えば、usersテーブルとrolesテーブルがある時には次のようにします。
+
+table-ordering.txt
+```
+roles
+users
+```
+
+roles.csv
+```csv
+ID,NAME
+1,ADMIN
+2,USER
+3,GUEST
+```
+
+users.csv
+```csv
+ID,ROLE_ID,NAME
+1,1,Administrator
+2,2,user01
+3,2,user02
+```
 
 #### DbUnitTesterを用いた検証
 DbUnitTesterはDbUnitのAbstractDatabaseTesterのサブクラスなので、DbUnitで出来ることはすべて行う事ができます。

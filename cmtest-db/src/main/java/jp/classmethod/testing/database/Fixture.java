@@ -22,20 +22,22 @@ import java.lang.annotation.Target;
 
 /**
  * {@link DbUnitTester}でDataSetとして扱うフィクスチャを指定するアノテーション。
- * <p>
- * resourcesにはリソースを指定する。
- * リソースはクラスパスから参照する。
+ * 
+ * <p>resourcesにはリソースを指定する。</p>
+ * 
+ * <p>リソースはクラスパスから参照する。
  * リソース名が/で始まる場合はルートパッケージからの絶対パスとなる（例: /jp/classmethod/testing/fixtures.yaml）
- * リソース名が/で始まらない場合はテストクラスと同じパッケージから検索する（例: users.yaml）
+ * リソース名が/で始まらない場合はテストクラスと同じパッケージから検索する（例: users.yaml）</p>
+ * 
+ * <p>typeにはリソースの種類を指定する。現在、YAMLとCSVのみ対応。
+ * YAMLの場合はYAMLファイルをリソースとして指定する。CSVの場合はCSVファイルがあるディレクトリを指定する。</p>
+ * 
  * <ul>
  * <li>テストクラスに指定した場合、全テストメソッドで共通のフィクスチャが適用される。</li>
  * <li>テストメソッドに指定した場合、そのテストメソッドのみで指定したフィクスチャが適用される。</li>
  * <li>両方に指定した場合は、テストメソッドのフィクスチャが優先される。</li>
  * <li>両方に指定しなかった場合は、空のフィクスチャが設定される。</li>
- * </p>
- * <p>
- * typeにはリソースの種類を指定する。現在、YAMLフォーマットのみ対応。
- * </p>
+ * </ul>
  * @since 1.0
  * @author shuji
  */
@@ -48,6 +50,6 @@ public @interface Fixture {
     Fixture.Type type() default Type.YAML;
 
     public static enum Type {
-        YAML;
+        YAML, CSV;
     }
 }
