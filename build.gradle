@@ -5,7 +5,7 @@ allprojects {
 	apply plugin: 'base'
 	
 	group = 'jp.classmethod.testing'
-	version = '0.4-SNAPSHOT'
+	version = '0.4'
 
 	repositories {
 		mavenCentral()

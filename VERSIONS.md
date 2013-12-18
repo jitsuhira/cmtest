@@ -1,4 +1,8 @@
 # バージョン情報
+## 0.4 - 2013/12/18
+- [cmtest-db]
+ - FixtureでのCSV形式のサポート
+
 ## 0.3 - 2013/11/25
 - [cmtest-baseunits](./cmtest-baseunits/)を追加
 	- FixClock - Clockによる現在時刻を固定化するルール
